@@ -1,0 +1,20 @@
+.transactionlist{
+    width: 100%;
+    border-collapse: collapse;
+    font-family: monospace;
+}
+
+.transactionlist button {
+    height: 3em;
+    width: 10em;
+    min-width: 10em;
+    margin-top: 0em;
+}
+tr {
+    height: 4em;
+    padding: 0.5em;
+}
+table {
+    width: 90%;
+    margin: 0 auto;
+}

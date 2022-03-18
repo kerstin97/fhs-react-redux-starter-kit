@@ -1,0 +1,13 @@
+.inputfield {
+  display: flex;
+  flex-direction: column;
+  width: 25em;
+}
+.inputfield select{
+  min-width: 20em;
+  height: 3.9em;
+  font-family: monospace;
+  border: solid 1px black;
+  background-color: white;
+  margin-top: 0.3em;
+}

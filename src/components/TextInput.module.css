@@ -1,0 +1,16 @@
+.inputfield {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type=password], input[type=text], input[type=number] {
+  width: 25em;
+  height: 3.6em;
+  font-family: monospace;
+  margin-top: 0.3em;
+  border: solid 1px black;
+}
+label {
+  font-family: monospace;
+  margin: 1em 0 0.5em 0;
+}

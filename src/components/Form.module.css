@@ -1,0 +1,13 @@
+form{
+    display: grid;
+    gap: 0.3em;
+    justify-content: center;
+    font-family: monospace;
+}
+form a{
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    font-family: monospace;
+    margin-top: 1em;
+}
