@@ -3,6 +3,7 @@ form{
     gap: 0.3em;
     justify-content: center;
     font-family: monospace;
+    margin: 2rem auto;
 }
 form a{
     text-align: center;

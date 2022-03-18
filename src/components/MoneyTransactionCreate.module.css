@@ -6,3 +6,7 @@
 .transaction button{
     margin-top: 3em;
 }
+.errorMsg{
+    position: absolute;
+top: 1rem;
+}

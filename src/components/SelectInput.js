@@ -1,13 +1,12 @@
 import React from 'react'
 import styles from './SelectInput.module.css'
 
-export const SelectInput = ({ label, id }) => {
+export const SelectInput = ({ label, id, name, data, onChange }) => {
   return (
     <div className={`${styles.inputfield}`}>
       <label htmlFor={id}>{label}</label>
-      <select name={id} id={`${id}-select`}>
-        <option value="Araz">Araz</option>
-        <option value="Kerstin">Kerstin</option>
+      <select name={name} id={`${id}-select`} onChange={onChange}>
+        { data.map((user) => (<option key={user.id} value={user.id} >{user.name}</option>))}
       </select>
     </div>
   )

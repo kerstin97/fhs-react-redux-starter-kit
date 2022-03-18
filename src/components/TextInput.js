@@ -5,7 +5,7 @@ export const TextInput = ({ label, type, id, name, value, onChange }) => {
   return (
     <div className={`${styles.inputfield}`}>
       <label htmlFor={id}>{label}</label>
-      <input type={type} id = {id} name={name} value = {value} onChange={onChange}></input>
+      <input type={type} id = {id} name={name} value={value} onChange={onChange}></input>
     </div>
   )
 }

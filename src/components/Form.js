@@ -4,7 +4,7 @@ import { TextInput } from './TextInput'
 import styles from './Form.module.css'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
-// import { Formik } from 'formik'
+import { Link, Router } from 'react-router-dom'
 
 export const Form = ({ type = 'signup' }) => {
   const [username, setUsername] = useState({ value: '' })
@@ -33,10 +33,11 @@ export const Form = ({ type = 'signup' }) => {
   let submitButton
   let linkToForm
   if (type === 'signin') {
-    submitButton = <Button onClick="Formic Form submitted">Sign In</Button>
-    linkToForm = <a href="#">Sign Up</a>
+    submitButton = <Button onClick="Sign In Form ">Sign In</Button>
+    linkToForm = <Router><Link to='/sign-up'>Sign Up</Link></Router>
   } else {
-    linkToForm = <a href="#">Sign In</a>
+    linkToForm = <Router><Link to='/sign-in'>Sign In</Link></Router>
+    submitButton = <Button onClick="Sign Up Form">Sign Up</Button>
   }
   return (
     <form onSubmit={formik.handleSubmit}>
