@@ -5,8 +5,14 @@ import { MoneyTransaction } from './MoneyTransaction'
 export const MoneyTransactionList = () => {
   const data = {
     moneyTransaction: [
-      { id: 1, creditorId: 1, debitorId: 2, amount: 10.00, paidAt: null },
-      { id: 2, creditorId: 3, debitorId: 1, amount: 11.20, paidAt: '2000-01-01T00:00:00+01+00' }
+      { id: 1, creditorId: 1, debitorId: 2, amount: 10.0, paidAt: null },
+      {
+        id: 2,
+        creditorId: 3,
+        debitorId: 1,
+        amount: 11.2,
+        paidAt: '2000-01-01T00:00:00+01+00'
+      }
     ],
     user: [
       { id: 1, name: 'Sepp' },
@@ -17,7 +23,13 @@ export const MoneyTransactionList = () => {
 
   return (
     <table className={`${styles.transactionlist}`}>
-       {data.moneyTransaction.map((transaction) => (<MoneyTransaction key={transaction.id} transaction={transaction} debitor={data.user.find((user) => user.id === transaction.debitorId)}/>))}
+      {data.moneyTransaction.map((transaction) => (
+        <MoneyTransaction
+          key={transaction.id}
+          transaction={transaction}
+          debitor={data.user.find((user) => user.id === transaction.debitorId)}
+        />
+      ))}
     </table>
   )
 }

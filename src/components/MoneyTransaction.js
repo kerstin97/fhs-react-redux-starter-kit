@@ -12,14 +12,26 @@ export const MoneyTransaction = ({ transaction, debitor }) => {
   })
   return (
     <tr>
-      <td className={`${!transaction.paidAt ? `${styles.paid} ` : ''}`}>{debitor.name}</td>
-      <td className={`${!transaction.paidAt ? `${styles.paid}` : ''} ${styles.alignend}`}>{transaction.amount}</td>
-        {transaction.paidAt && <td className={`${styles.alignend}`}>
+      <td className={`${!transaction.paidAt ? `${styles.paid} ` : ''}`}>
+        {debitor.name}
+      </td>
+      <td
+        className={`${!transaction.paidAt ? `${styles.paid}` : ''} ${
+          styles.alignend
+        }`}
+      >
+        {transaction.amount}
+      </td>
+      {transaction.paidAt && (
+        <td className={`${styles.alignend}`}>
           <form onSubmit={formik.handleSubmit}>
             <input type="hidden" name="id" value={`${debitor.id}`}></input>
-            <Button type="submit" onClick="Paid" className={`${styles.button}`}>Paid</Button>
+            <Button type="submit" onClick="Paid" className={`${styles.button}`}>
+              Paid
+            </Button>
           </form>
-        </td>}
+        </td>
+      )}
       {!transaction.paidAt && <td></td>}
     </tr>
   )

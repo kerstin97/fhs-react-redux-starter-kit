@@ -23,10 +23,24 @@ export const MoneyTransactionCreate = ({ users, creditorId }) => {
   })
 
   return (
-    <form className={`${styles.transaction}`} onSubmit={formik.handleSubmit} >
-      <SelectInput label='User' id='user' name='user' data={users} onChange={formik.handleChange} value={formik.values.user}></SelectInput>
-      <TextInput type="text" id="amount" name='amount' label="Amount" onChange={formik.handleChange} value={formik.values.amount}></TextInput>
-      <div className={`${styles.errorMsg}`}>{ formik.errors.amount }</div>
+    <form className={`${styles.transaction}`} onSubmit={formik.handleSubmit}>
+      <SelectInput
+        label="User"
+        id="user"
+        name="user"
+        data={users}
+        onChange={formik.handleChange}
+        value={formik.values.user}
+      ></SelectInput>
+      <TextInput
+        type="text"
+        id="amount"
+        name="amount"
+        label="Amount"
+        onChange={formik.handleChange}
+        value={formik.values.amount}
+      ></TextInput>
+      <div className={`${styles.errorMsg}`}>{formik.errors.amount}</div>
       <Button onClick="Create Transaction">Create</Button>
     </form>
   )

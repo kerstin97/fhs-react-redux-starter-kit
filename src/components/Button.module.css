@@ -9,7 +9,7 @@
   min-width: 25em;
   cursor: pointer;
 }
-.button:hover{
+.button:hover {
   background-color: whitesmoke;
 }
 
@@ -20,5 +20,5 @@
 
 .primary {
   color: #ffffff;
-  background: #2268FF;
+  background: #2268ff;
 }

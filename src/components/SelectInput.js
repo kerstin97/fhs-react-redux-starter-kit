@@ -6,7 +6,11 @@ export const SelectInput = ({ label, id, name, data, onChange }) => {
     <div className={`${styles.inputfield}`}>
       <label htmlFor={id}>{label}</label>
       <select name={name} id={`${id}-select`} onChange={onChange}>
-        { data.map((user) => (<option key={user.id} value={user.id} >{user.name}</option>))}
+        {data.map((user) => (
+          <option key={user.id} value={user.id}>
+            {user.name}
+          </option>
+        ))}
       </select>
     </div>
   )
