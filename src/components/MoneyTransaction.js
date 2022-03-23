@@ -3,7 +3,7 @@ import { Button } from './Button'
 import styles from './MoneyTransaction.module.css'
 import { useFormik } from 'formik'
 
-export const MoneyTransaction = ({ transaction, debitor }) => {
+export const MoneyTransaction = ({ transaction = {}, debitor = {} }) => {
   const formik = useFormik({
     initialValues: { id: debitor.id },
     onSubmit: (values) => {
