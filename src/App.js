@@ -16,6 +16,19 @@ function App () {
       .then((response) => response.json())
       .then((json) => setUsers(json))
   }, [])
+
+  const handleSubmit = function (debitor, creditor, amount) {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ debitorId: parseInt(debitor), creditorId: parseInt(creditor), amount: parseInt(amount), paidAt: new Date().toISOString() })
+    }
+
+    fetch('http://localhost:3001/money-transaction', options)
+      .then(response => response.json())
+      .then(() => fetch('http://localhost:3001/money-transaction').then((response) => response.json()).then((json) => setTransactions(json)))
+  }
+
   return (
     <Router>
       <Routes>
@@ -28,6 +41,7 @@ function App () {
               <MoneyTransactionCreate
                 users={users}
                 creditorId={4}
+                onSubmit={handleSubmit}
               />
               <MoneyTransactionList transactions={moneyTransaction} users={users}/>
             </>

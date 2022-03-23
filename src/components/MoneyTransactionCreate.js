@@ -6,7 +6,7 @@ import styles from './MoneyTransactionCreate.module.css'
 import { useFormik } from 'formik'
 import { object, number } from 'yup'
 
-export const MoneyTransactionCreate = ({ users, creditorId }) => {
+export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
   const transactionSchema = object({
     amount: number()
   })
@@ -15,10 +15,7 @@ export const MoneyTransactionCreate = ({ users, creditorId }) => {
     initialValues: { user: '', amount: '' },
     validationSchema: transactionSchema,
     onSubmit: (values) => {
-      // log the values of the form
-      console.log('debitor_id: ' + values.user)
-      console.log('creditor_id: ' + creditorId)
-      console.log('amount: ' + values.amount)
+      onSubmit(values.user, creditorId, values.amount)
     }
   })
 
