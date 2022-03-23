@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Form } from './components/Form'
+import { SignUpForm } from './components/SignUpForm'
+import { SignInForm } from './components/SignInForm'
 import { MoneyTransactionList } from './components/MoneyTransactionList'
 import { MoneyTransactionCreate } from './components/MoneyTransactionCreate'
 
@@ -32,8 +33,8 @@ function App () {
   return (
     <Router>
       <Routes>
-        <Route path="/sign-in" element={<Form type="signin"></Form>} />
-        <Route path="/sign-up" element={<Form></Form>} />
+        <Route path="/sign-in" element={<SignInForm/>} />
+        <Route path="/sign-up" element={<SignUpForm/>} />
         <Route
           path="/money-transactions"
           element={
