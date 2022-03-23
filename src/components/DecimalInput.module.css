@@ -1,5 +1,5 @@
 .inputfield {
-    display: flex;
-    flex-direction: column;
-    width: 25em;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 25em;
+}

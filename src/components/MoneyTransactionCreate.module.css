@@ -1,8 +1,12 @@
-.transaction{
-    display: flex;
-    align-items: center;
-    gap: 1em;
+.transaction {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
-.transaction button{
-    margin-top: 3em;
+.transaction button {
+  margin-top: 3em;
+}
+.errorMsg {
+  position: absolute;
+  top: 1rem;
 }
