@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 export const SignInForm = () => {
   const userSchema = object({
     username: string().min(3),
-    password: string().min(6),
+    password: string().min(6)
   })
 
   const formik = useFormik({
@@ -19,7 +19,7 @@ export const SignInForm = () => {
       // log the values of the form
       console.log('Password: ' + values.password)
       console.log('Username: ' + values.username)
-    },
+    }
   })
 
   return (

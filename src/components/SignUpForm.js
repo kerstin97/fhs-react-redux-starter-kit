@@ -27,7 +27,7 @@ export const SignUpForm = () => {
       <TextInput type="text" id="username" name="username" label="Username" onChange={formik.handleChange} value={formik.values.username} errorMessage={ formik.errors.username }></TextInput>
       <TextInput type="password" id="password" name="password" label="password" onChange={formik.handleChange} value={formik.values.password} errorMessage={ formik.errors.password }></TextInput>
       <Button onClick="Sign Up Form">Sign Up</Button>
-      <Link to='/sign-in'>Sign In/Link>
+      <Link to='/sign-in'>Sign In</Link>
     </form>
   )
 }
