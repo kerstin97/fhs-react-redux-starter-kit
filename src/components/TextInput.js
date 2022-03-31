@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './TextInput.module.css'
 
-export const TextInput = ({ label, type, id, name, value, onChange }) => {
+export const TextInput = ({ label, type, id, name, value, onChange, errorMessage = '' }) => {
   return (
     <div className={`${styles.inputfield}`}>
       <label htmlFor={id}>{label}</label>
@@ -12,6 +12,7 @@ export const TextInput = ({ label, type, id, name, value, onChange }) => {
         value={value}
         onChange={onChange}
       ></input>
+      {errorMessage}
     </div>
   )
 }

@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:server": "json-server --watch db.json --port 3001",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -73,6 +74,7 @@
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-react": "^7.29.2",
     "husky": "^7.0.4",
+    "json-server": "^0.17.0",
     "lint-staged": "^12.3.4",
     "webpack": "^5.70.0"
   },
