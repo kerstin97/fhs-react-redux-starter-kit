@@ -13,6 +13,7 @@ function App() {
 
   useEffect(() => {
     getUsers()
+    getTransactions()
   }, [])
   /* useEffect(() => {
     fetch('http://localhost:3001/money-transaction')
@@ -27,6 +28,15 @@ function App() {
     const data = await getDocs(userCollectionRef)
     // We generate our own user objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    setUsers(parsedData)
+    console.log(parsedData)
+  }
+
+  async function get() {
+    const data = await getDocs(userCollectionRef)
+    // We generate our own user objects which match our expected schema
+    const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    setUsers(parsedData)
     console.log(parsedData)
   }
 
@@ -62,12 +72,12 @@ function App() {
           path="/money-transactions"
           element={
             <>
-              {/* <MoneyTransactionCreate
+              <MoneyTransactionCreate
                 users={users}
                 creditorId={4}
                 onSubmit={handleSubmit}
               />
-              <MoneyTransactionList transactions={moneyTransaction} users={users}/> */}
+              {/* <MoneyTransactionList transactions={moneyTransaction} users={users}/> */}
             </>
           }
         />
