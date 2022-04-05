@@ -15,8 +15,9 @@ export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
     initialValues: { user: '', amount: '' },
     validationSchema: transactionSchema,
     onSubmit: (values) => {
-      console.log('submitted new entry...')
       onSubmit(values.user, creditorId, values.amount)
+      values.amount = ''
+      document.getElementById('user-select').value = 0
     }
   })
 

@@ -30,18 +30,16 @@ function App () {
     // We generate our own transaction objects which match our expected schema
     const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     setTransactions(parsedData)
-    console.log(parsedData)
   }
 
   async function createTransaction (debitor, creditor, amount) {
     // create a new moneytransaction with a generated id.
-    const docRef = await addDoc(collection(db, 'moneyTransactions'), {
+    await addDoc(collection(db, 'moneyTransactions'), {
       debitorId: debitor,
       creditorId: creditor,
-      amount: parseInt(amount),
+      amount: parseFloat(amount),
       paidAt: null
     })
-    console.log('Document written with ID: ', docRef.id)
   }
 
   const handleSubmit = function (debitor, creditor, amount) {
@@ -66,7 +64,7 @@ function App () {
                 creditorId={ownId}
                 onSubmit={handleSubmit}
               />
-               <MoneyTransactionList transactions={moneyTransaction} users={users}/>
+               <MoneyTransactionList transactions={moneyTransaction} users={users} getTransactions={getTransactions}/>
             </>
           }
         />

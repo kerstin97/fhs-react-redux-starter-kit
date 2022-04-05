@@ -2,12 +2,22 @@ import React from 'react'
 import { Button } from './Button'
 import styles from './MoneyTransaction.module.css'
 import { useFormik } from 'formik'
+import { db } from '../firebase-config'
+import { doc, updateDoc } from 'firebase/firestore'
 
-export const MoneyTransaction = ({ transaction = {}, debitor = {} }) => {
+export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactions }) => {
+  // Update transaction
+  async function updateTransaction (moneyTransactionsDocRef) {
+    await updateDoc(moneyTransactionsDocRef, {
+      paidAt: new Date().toISOString()
+    })
+  }
   const formik = useFormik({
     initialValues: { id: debitor.id },
     onSubmit: (values) => {
-      console.log('ID: ' + values.id + ', paidAt: ' + new Date().toISOString())
+      const moneyTransactionsDocRef = doc(db, 'moneyTransactions', transaction.id)
+      updateTransaction(moneyTransactionsDocRef)
+      getTransactions()
     }
   })
   return (
