@@ -11,25 +11,36 @@ function App () {
   const [moneyTransaction, setTransactions] = useState([])
   const [users, setUsers] = useState([])
 
+  const [oweSomebody, setOweState] = useState('oweMe')
   const [ownId] = useState('OLk5e7VlKsArydZerjWO')
+
+  function toggleOwe () {
+    if (oweSomebody === 'oweSb') {
+      setOweState('oweMe')
+    } else {
+      setOweState('oweSb')
+    }
+  }
 
   useEffect(() => {
     getUsers()
     getTransactions()
-  }, [])
+  }, [oweSomebody])
 
   async function getUsers () {
     const data = await getDocs(userCollectionRef)
-    // We generate our own user objects which match our expected schema
-    const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).filter(user => user.id !== ownId)
+    const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     setUsers(parsedData)
-    console.log(parsedData)
   }
 
   async function getTransactions () {
     const data = await getDocs(moneyTransactionsCollectionRef)
-    // We generate our own transaction objects which match our expected schema
-    const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    let parsedData
+    if (oweSomebody === 'oweMe') {
+      parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).filter(transaction => transaction.debitorId === ownId)
+    } else {
+      parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).filter(transaction => transaction.creditorId === ownId)
+    }
     setTransactions(parsedData)
   }
 
@@ -61,11 +72,13 @@ function App () {
           element={
             <>
               <MoneyTransactionCreate
-                users={users}
-                creditorId={ownId}
+                users={users.filter(user => user.id !== ownId)}
+                myId={ownId}
                 onSubmit={handleSubmit}
+                oweSomebody={oweSomebody}
+                toggleOwe={toggleOwe}
               />
-               <MoneyTransactionList transactions={moneyTransaction} users={users} getTransactions={getTransactions}/>
+               <MoneyTransactionList transactions={moneyTransaction} users={users} getTransactions={getTransactions} oweSomebody={oweSomebody}/>
             </>
           }
         />

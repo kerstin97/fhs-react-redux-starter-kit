@@ -6,16 +6,27 @@ import styles from './MoneyTransactionCreate.module.css'
 import { useFormik } from 'formik'
 import { object, number } from 'yup'
 
-export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
+export const MoneyTransactionCreate = ({ users, myId, onSubmit, oweSomebody, toggleOwe }) => {
   const transactionSchema = object({
     amount: number().required()
   })
 
   const formik = useFormik({
-    initialValues: { user: '', amount: '' },
+    initialValues: { user: '', amount: '', owe: oweSomebody },
     validationSchema: transactionSchema,
     onSubmit: (values) => {
-      onSubmit(values.user, creditorId, values.amount)
+      let creditor
+      let debitor
+
+      if (oweSomebody === 'oweMe') {
+        creditor = values.user
+        debitor = myId
+      } else {
+        debitor = values.user
+        creditor = myId
+      }
+
+      onSubmit(debitor, creditor, values.amount)
       values.amount = ''
       document.getElementById('user-select').value = 0
     }
@@ -23,6 +34,14 @@ export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
 
   return (
     <form className={`${styles.transaction}`} onSubmit={formik.handleSubmit}>
+      <div className={`${styles.toggleOwe}`}>
+        <input type="radio" id="oweSb" name="owe" value='oweSb' onChange={() => toggleOwe()}></input>
+        <label htmlFor="oweSb">I owe somebody</label>
+        <input type="radio" id="oweMe" name="owe" value='oweMe' onChange={() => toggleOwe()}></input>
+        <label htmlFor="oweMe">Somebody owes me</label><br></br>
+      </div>
+
+
       <SelectInput
         label="User"
         id="user"
