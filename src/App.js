@@ -21,8 +21,9 @@ function App () {
   async function getUsers () {
     const data = await getDocs(userCollectionRef)
     // We generate our own user objects which match our expected schema
-    const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    const parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).filter(user => user.id !== ownId)
     setUsers(parsedData)
+    console.log(parsedData)
   }
 
   async function getTransactions () {
