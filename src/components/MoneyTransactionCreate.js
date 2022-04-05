@@ -8,14 +8,14 @@ import { object, number } from 'yup'
 
 export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
   const transactionSchema = object({
-    amount: number(),
-    user: number()
+    amount: number()
   })
 
   const formik = useFormik({
     initialValues: { user: '', amount: '' },
     validationSchema: transactionSchema,
     onSubmit: (values) => {
+      console.log('submitted new entry...')
       onSubmit(values.user, creditorId, values.amount)
     }
   })
@@ -39,7 +39,7 @@ export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
         value={formik.values.amount}
       ></TextInput>
       <div className={`${styles.errorMsg}`}>{formik.errors.amount}</div>
-      <Button onClick="Create Transaction">Create</Button>
+      <Button onClick="button clicked">Create</Button>
     </form>
   )
 }

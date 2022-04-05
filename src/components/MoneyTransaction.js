@@ -12,17 +12,17 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {} }) => {
   })
   return (
     <tr>
-      <td className={`${!transaction.paidAt ? `${styles.paid} ` : ''}`}>
+      <td className={`${transaction.paidAt ? `${styles.paid} ` : ''}`}>
         {debitor.name}
       </td>
       <td
-        className={`${!transaction.paidAt ? `${styles.paid}` : ''} ${
+        className={`${transaction.paidAt ? `${styles.paid}` : ''} ${
           styles.alignend
         }`}
       >
         {transaction.amount}
       </td>
-      {transaction.paidAt && (
+      {!transaction.paidAt && (
         <td className={`${styles.alignend}`}>
           <form onSubmit={formik.handleSubmit}>
             <input type="hidden" name="id" value={`${debitor.id}`}></input>
@@ -32,7 +32,7 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {} }) => {
           </form>
         </td>
       )}
-      {!transaction.paidAt && <td></td>}
+      {transaction.paidAt && <td></td>}
     </tr>
   )
 }
