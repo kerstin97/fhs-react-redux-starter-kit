@@ -8,7 +8,7 @@ import { object, number } from 'yup'
 
 export const MoneyTransactionCreate = ({ users, creditorId, onSubmit }) => {
   const transactionSchema = object({
-    amount: number()
+    amount: number().required()
   })
 
   const formik = useFormik({

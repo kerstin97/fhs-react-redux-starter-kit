@@ -13,7 +13,7 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactio
     })
   }
   const formik = useFormik({
-    initialValues: { id: debitor.id },
+    initialValues: { id: String(debitor.id) },
     onSubmit: (values) => {
       const moneyTransactionsDocRef = doc(db, 'moneyTransactions', transaction.id)
       updateTransaction(moneyTransactionsDocRef)
@@ -23,7 +23,7 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactio
   return (
     <tr>
       <td className={`${transaction.paidAt ? `${styles.paid} ` : ''}`}>
-        {debitor.name}
+        {String(debitor.name)}
       </td>
       <td
         className={`${transaction.paidAt ? `${styles.paid}` : ''} ${
@@ -35,7 +35,7 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactio
       {!transaction.paidAt && (
         <td className={`${styles.alignend}`}>
           <form onSubmit={formik.handleSubmit}>
-            <input type="hidden" name="id" value={`${debitor.id}`}></input>
+            <input type="hidden" name="id" value={`${String(debitor.id)}`}></input>
             <Button type="submit" onClick="Paid" className={`${styles.button}`}>
               Paid
             </Button>
