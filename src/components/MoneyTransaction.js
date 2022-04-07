@@ -2,37 +2,47 @@ import React from 'react'
 import { Button } from './Button'
 import styles from './MoneyTransaction.module.css'
 import { useFormik } from 'formik'
+import { db } from '../firebase-config'
+import { doc, updateDoc } from 'firebase/firestore'
 
-export const MoneyTransaction = ({ transaction = {}, debitor = {} }) => {
+export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactions }) => {
+  // Update transaction
+  async function updateTransaction (moneyTransactionsDocRef) {
+    await updateDoc(moneyTransactionsDocRef, {
+      paidAt: new Date().toISOString()
+    })
+  }
   const formik = useFormik({
-    initialValues: { id: debitor.id },
+    initialValues: { id: String(debitor.id) },
     onSubmit: (values) => {
-      console.log('ID: ' + values.id + ', paidAt: ' + new Date().toISOString())
+      const moneyTransactionsDocRef = doc(db, 'moneyTransactions', transaction.id)
+      updateTransaction(moneyTransactionsDocRef)
+      getTransactions()
     }
   })
   return (
     <tr>
-      <td className={`${!transaction.paidAt ? `${styles.paid} ` : ''}`}>
-        {debitor.name}
+      <td className={`${transaction.paidAt ? `${styles.paid} ` : ''}`}>
+        {String(debitor.name)}
       </td>
       <td
-        className={`${!transaction.paidAt ? `${styles.paid}` : ''} ${
+        className={`${transaction.paidAt ? `${styles.paid}` : ''} ${
           styles.alignend
         }`}
       >
         {transaction.amount}
       </td>
-      {transaction.paidAt && (
+      {!transaction.paidAt && (
         <td className={`${styles.alignend}`}>
           <form onSubmit={formik.handleSubmit}>
-            <input type="hidden" name="id" value={`${debitor.id}`}></input>
+            <input type="hidden" name="id" value={`${String(debitor.id)}`}></input>
             <Button type="submit" onClick="Paid" className={`${styles.button}`}>
               Paid
             </Button>
           </form>
         </td>
       )}
-      {!transaction.paidAt && <td></td>}
+      {transaction.paidAt && <td></td>}
     </tr>
   )
 }

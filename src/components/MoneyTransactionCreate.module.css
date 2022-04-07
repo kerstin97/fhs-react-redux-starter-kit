@@ -1,5 +1,6 @@
 .transaction {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 1em;
 }
@@ -10,3 +11,21 @@
   position: absolute;
   top: 1rem;
 }
+
+.inputfield {
+  display: flex;
+  flex-direction: column;
+}
+.toggleOwe {
+  flex-basis: 100%;
+  text-align: center;
+}
+.toggleOwe input[type="radio"] {
+  display: none;
+}
+
+.toggleOwe label {
+  padding: 25px;
+  font-size: 18px;
+}
+

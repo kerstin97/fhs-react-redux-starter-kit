@@ -13,6 +13,13 @@
       "debitorId": 1,
       "amount": 11.2,
       "paidAt": "2000-01-01T00:00:00+01+00"
+    },
+    {
+      "debitorId": 2,
+      "creditorId": 4,
+      "amount": 1111,
+      "paidAt": "2022-04-04T11:52:47.890Z",
+      "id": 3
     }
   ],
   "user": [
