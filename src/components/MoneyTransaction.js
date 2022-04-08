@@ -31,7 +31,7 @@ export const MoneyTransaction = ({
   return (
     <tr>
       <td className={`${transaction.paidAt ? `${styles.paid} ` : ''}`}>
-        {String(debitor.name)}
+        {debitor.name ? debitor.name : 'Unbekannt'}
       </td>
       <td
         className={`${transaction.paidAt ? `${styles.paid}` : ''} ${

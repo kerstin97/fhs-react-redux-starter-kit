@@ -10,11 +10,12 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 
 export const SignInForm = ({ user }) => {
   if (user) return <Navigate to="/money-transactions"></Navigate>
-
   async function handleSubmit (email, password) {
     try {
       await signInWithEmailAndPassword(auth, email, password)
-    } catch {}
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   const userSchema = object({
@@ -52,6 +53,7 @@ export const SignInForm = ({ user }) => {
       ></TextInput>
       <Button onClick={() => console.log('Sign up')}>Sign In</Button>
       <Link to="/sign-up">Sign Up</Link>
+      <Link to="/reset-password">Forgot Password?</Link>
     </form>
   )
 }

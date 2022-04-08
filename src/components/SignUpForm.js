@@ -17,12 +17,14 @@ export const SignUpForm = ({ user }) => {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
-        password,
+        password
       )
 
       const uid = userCredentials.user.uid
       await setDoc(doc(db, 'users', uid), { name: name })
-    } catch {}
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   //  https://codesandbox.io/s/l2r832l8x7?file=/src/index.js:94-121 code for password confirmation

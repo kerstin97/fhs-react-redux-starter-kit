@@ -6,6 +6,7 @@ import { MoneyTransactions } from './components/MoneyTransactions'
 import { auth, db } from './firebase-config'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { ResetPassword } from './components/ResetPassword'
 
 function App () {
   const [moneyTransaction, setTransactions] = useState([])
@@ -92,6 +93,7 @@ function App () {
             </ProtectedRoute>
           }
         />
+        <Route path="/reset-password" element={<ResetPassword user={user} />} />
       </Routes>
     </Router>
   )
