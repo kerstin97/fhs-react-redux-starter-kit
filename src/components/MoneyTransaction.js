@@ -5,7 +5,11 @@ import { useFormik } from 'formik'
 import { db } from '../firebase-config'
 import { doc, updateDoc } from 'firebase/firestore'
 
-export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactions }) => {
+export const MoneyTransaction = ({
+  transaction = {},
+  debitor = {},
+  getTransactions
+}) => {
   // Update transaction
   async function updateTransaction (moneyTransactionsDocRef) {
     await updateDoc(moneyTransactionsDocRef, {
@@ -15,7 +19,11 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactio
   const formik = useFormik({
     initialValues: { id: String(debitor.id) },
     onSubmit: (values) => {
-      const moneyTransactionsDocRef = doc(db, 'moneyTransactions', transaction.id)
+      const moneyTransactionsDocRef = doc(
+        db,
+        'moneyTransactions',
+        transaction.id
+      )
       updateTransaction(moneyTransactionsDocRef)
       getTransactions()
     }
@@ -35,8 +43,16 @@ export const MoneyTransaction = ({ transaction = {}, debitor = {}, getTransactio
       {!transaction.paidAt && (
         <td className={`${styles.alignend}`}>
           <form onSubmit={formik.handleSubmit}>
-            <input type="hidden" name="id" value={`${String(debitor.id)}`}></input>
-            <Button type="submit" onClick="Paid" className={`${styles.button}`}>
+            <input
+              type="hidden"
+              name="id"
+              value={`${String(debitor.id)}`}
+            ></input>
+            <Button
+              type="submit"
+              onClick={() => console.log('Paid')}
+              className={`${styles.button}`}
+            >
               Paid
             </Button>
           </form>

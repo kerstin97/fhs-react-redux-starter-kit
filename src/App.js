@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { SignUpForm } from './components/SignUpForm'
 import { SignInForm } from './components/SignInForm'
-import { MoneyTransactionList } from './components/MoneyTransactionList'
-import { MoneyTransactionCreate } from './components/MoneyTransactionCreate'
-import { db } from './firebase-config'
+import { MoneyTransactions } from './components/MoneyTransactions'
+import { auth, db } from './firebase-config'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App () {
   const [moneyTransaction, setTransactions] = useState([])
   const [users, setUsers] = useState([])
 
   const [oweSomebody, setOweState] = useState('oweMe')
-  const [ownId] = useState('OLk5e7VlKsArydZerjWO')
+
+  const [user, setUser] = useState('')
+
+  // to handle the current logged in user in time
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => setUser(user))
+  }, [])
 
   function toggleOwe () {
     if (oweSomebody === 'oweSb') {
@@ -37,9 +43,13 @@ function App () {
     const data = await getDocs(moneyTransactionsCollectionRef)
     let parsedData
     if (oweSomebody === 'oweMe') {
-      parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).filter(transaction => transaction.debitorId === ownId)
+      parsedData = data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((transaction) => transaction.debitorId === user.uid)
     } else {
-      parsedData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).filter(transaction => transaction.creditorId === ownId)
+      parsedData = data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter((transaction) => transaction.creditorId === user.uid)
     }
     setTransactions(parsedData)
   }
@@ -65,21 +75,21 @@ function App () {
   return (
     <Router>
       <Routes>
-        <Route path="/sign-in" element={<SignInForm />} />
-        <Route path="/sign-up" element={<SignUpForm />} />
+        <Route path="/sign-in" element={<SignInForm user={user} />} />
+        <Route path="/sign-up" element={<SignUpForm user={user} />} />
         <Route
           path="/money-transactions"
           element={
-            <>
-              <MoneyTransactionCreate
-                users={users.filter(user => user.id !== ownId)}
-                myId={ownId}
+            <ProtectedRoute user={user}>
+              <MoneyTransactions
+                transactions={moneyTransaction}
+                users={users}
                 onSubmit={handleSubmit}
+                getTransactions={getTransactions}
                 oweSomebody={oweSomebody}
                 toggleOwe={toggleOwe}
               />
-               <MoneyTransactionList transactions={moneyTransaction} users={users} getTransactions={getTransactions} oweSomebody={oweSomebody}/>
-            </>
+            </ProtectedRoute>
           }
         />
       </Routes>

@@ -4,11 +4,21 @@ import { TextInput } from './TextInput'
 import styles from './Form.module.css'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { auth } from '../firebase-config'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
-export const SignInForm = () => {
+export const SignInForm = ({ user }) => {
+  if (user) return <Navigate to="/money-transactions"></Navigate>
+
+  async function handleSubmit (email, password) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+    } catch {}
+  }
+
   const userSchema = object({
-    username: string().min(3),
+    email: string().min(3),
     password: string().min(6)
   })
 
@@ -16,9 +26,7 @@ export const SignInForm = () => {
     initialValues: { username: '', password: '' },
     validationSchema: userSchema,
     onSubmit: (values) => {
-      // log the values of the form
-      console.log('Password: ' + values.password)
-      console.log('Username: ' + values.username)
+      handleSubmit(values.email, values.password)
     }
   })
 
@@ -26,12 +34,12 @@ export const SignInForm = () => {
     <form onSubmit={formik.handleSubmit}>
       <TextInput
         type="text"
-        id="username"
-        name="username"
-        label="Username"
+        id="email"
+        name="email"
+        label="email"
         onChange={formik.handleChange}
-        value={formik.values.username}
-        errorMessage={formik.errors.username}
+        value={formik.values.email}
+        errorMessage={formik.errors.email}
       ></TextInput>
       <TextInput
         type="password"
@@ -42,7 +50,7 @@ export const SignInForm = () => {
         value={formik.values.password}
         errorMessage={formik.errors.password}
       ></TextInput>
-      <Button onClick="Sign In Form ">Sign In</Button>
+      <Button onClick={() => console.log('Sign up')}>Sign In</Button>
       <Link to="/sign-up">Sign Up</Link>
     </form>
   )
