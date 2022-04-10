@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { MoneyTransactionList } from '../components/MoneyTransactionList'
 import { MoneyTransactionCreate } from '../components/MoneyTransactionCreate'
 import { Button } from './Button'
@@ -6,16 +6,17 @@ import { signOut, deleteUser } from 'firebase/auth'
 import { auth, db } from '../firebase-config'
 import { doc, deleteDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../App'
 
 export const MoneyTransactions = ({
   users,
-  user,
   transactions,
   getTransactions,
   onSubmit,
   oweSomebody,
   toggleOwe
 }) => {
+  const user = useContext(UserContext)
   const navigate = useNavigate()
 
   async function logoutUser () {
@@ -53,7 +54,6 @@ export const MoneyTransactions = ({
       <Button onClick={deleteCurrentUser}>Delete Account</Button>
       <MoneyTransactionCreate
         users={users.filter((anyuser) => anyuser.id !== user.uid)}
-        user={user}
         onSubmit={onSubmit}
         oweSomebody={oweSomebody}
         toggleOwe={toggleOwe}

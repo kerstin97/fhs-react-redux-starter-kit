@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from './Button'
 import { TextInput } from './TextInput'
 import styles from './Form.module.css'
@@ -8,8 +8,10 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import { db, auth } from '../firebase-config'
 import * as Yup from 'yup'
+import { UserContext } from '../App'
 
-export const SignUpForm = ({ user }) => {
+export const SignUpForm = () => {
+  const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
 
   async function handleSubmit (name, password, email) {

@@ -8,6 +8,11 @@ import { collection, getDocs, addDoc } from 'firebase/firestore'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ResetPassword } from './components/ResetPassword'
 
+// Context lets us pass a value deep into the component tree
+// without explicitly threading it through every component.
+// Create a context for the current theme (with "light" as the default).
+export const UserContext = React.createContext()
+
 function App () {
   const [moneyTransaction, setTransactions] = useState([])
   const [users, setUsers] = useState([])
@@ -74,28 +79,30 @@ function App () {
   const moneyTransactionsCollectionRef = collection(db, 'moneyTransactions')
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/sign-in" element={<SignInForm user={user} />} />
-        <Route path="/sign-up" element={<SignUpForm user={user} />} />
-        <Route
-          path="/money-transactions"
-          element={
-            <ProtectedRoute user={user}>
-              <MoneyTransactions
-                transactions={moneyTransaction}
-                users={users}
-                onSubmit={handleSubmit}
-                getTransactions={getTransactions}
-                oweSomebody={oweSomebody}
-                toggleOwe={toggleOwe}
-              />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/reset-password" element={<ResetPassword user={user} />} />
-      </Routes>
-    </Router>
+    <UserContext.Provider value={user}>
+      <Router>
+        <Routes>
+            <Route path="/sign-in" element={<SignInForm />} />
+            <Route path="/sign-up" element={<SignUpForm />} />
+            <Route
+              path="/money-transactions"
+              element={
+                <ProtectedRoute>
+                  <MoneyTransactions
+                    transactions={moneyTransaction}
+                    users={users}
+                    onSubmit={handleSubmit}
+                    getTransactions={getTransactions}
+                    oweSomebody={oweSomebody}
+                    toggleOwe={toggleOwe}
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/reset-password" element={<ResetPassword />} />
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   )
 }
 

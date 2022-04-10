@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from './Button'
 import { TextInput } from './TextInput'
 import styles from './Form.module.css'
@@ -7,8 +7,10 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../firebase-config'
 import * as Yup from 'yup'
+import { UserContext } from '../App'
 
-export const ResetPassword = ({ user }) => {
+export const ResetPassword = () => {
+  const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
   const navigate = useNavigate()
 

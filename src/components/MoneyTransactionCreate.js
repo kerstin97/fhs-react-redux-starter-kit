@@ -1,18 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from './Button'
 import { SelectInput } from './SelectInput'
 import { TextInput } from './TextInput'
 import styles from './MoneyTransactionCreate.module.css'
 import { useFormik } from 'formik'
 import { object, number } from 'yup'
+import { UserContext } from '../App'
 
 export const MoneyTransactionCreate = ({
   users,
-  user,
   onSubmit,
   oweSomebody,
   toggleOwe
 }) => {
+  const user = useContext(UserContext)
   const transactionSchema = object({
     amount: number().required()
   })
