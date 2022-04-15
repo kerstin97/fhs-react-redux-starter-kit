@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { Button } from './Button'
 import { TextInput } from './TextInput'
 import styles from './Form.module.css'
@@ -9,7 +9,7 @@ import { auth } from '../firebase-config'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { UserContext } from '../App'
 
-export default function SignInForm () {
+function SignInForm () {
   const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
   async function handleSubmit (email, password) {
@@ -52,9 +52,16 @@ export default function SignInForm () {
         value={formik.values.password}
         errorMessage={formik.errors.password}
       ></TextInput>
-      <Button onClick={() => console.log('Sign up')}>Sign In</Button>
+      <Button onClick={
+        useCallback(
+          () => console.log('Sign in'),
+          []
+        )
+        }>Sign In</Button>
       <Link to="/sign-up">Sign Up</Link>
       <Link to="/reset-password">Forgot Password?</Link>
     </form>
   )
 }
+
+export default React.memo(SignInForm)

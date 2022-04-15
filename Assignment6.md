@@ -11,4 +11,8 @@
     with CRA 6 run npm run build
 
 - "Memoizing" functions -> makes it faster by trading space for time. It does this by caching the return values of the function in a table.
-- use lazy load
+- - used memo for SignUpForm, SignInForm, MoneyTransactions, ResetPassword
+- use lazy load for SignUpForm, SignInForm, MoneyTransactions, ResetPassword
+- init Arrays/Objects with default values -> used in `MoneyTransaction.js`
+- used useCallback() in `MoneyTransaction.js`  line 56 & in `ResetPassword.js` line 52 -> cache/memoize the callback function 
+ & in `MoneyTransactionCreate.js` line 83 -> cache/memoize the callback function,`SignInForm.js` line 56 & `SignUpForm.js` line 94

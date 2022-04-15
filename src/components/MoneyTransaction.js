@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Button } from './Button'
 import styles from './MoneyTransaction.module.css'
 import { useFormik } from 'formik'
 import { db } from '../firebase-config'
 import { doc, updateDoc } from 'firebase/firestore'
 
+const DEFAULT_OBJECT = {}
+
 export const MoneyTransaction = ({
-  transaction = {},
-  debitor = {},
+  transaction = DEFAULT_OBJECT,
+  debitor = DEFAULT_OBJECT,
   getTransactions
 }) => {
   // Update transaction
@@ -50,7 +52,12 @@ export const MoneyTransaction = ({
             ></input>
             <Button
               type="submit"
-              onClick={() => console.log('Paid')}
+              onClick={
+                useCallback(
+                  () => console.log('Paid'),
+                  []
+                )
+              }
               className={`${styles.button}`}
             >
               Paid
