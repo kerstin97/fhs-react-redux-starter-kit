@@ -37,7 +37,7 @@ function App () {
   useEffect(() => {
     getUsers()
     getTransactions()
-  }, [oweSomebody])
+  }, [oweSomebody, user])
 
   async function getUsers () {
     const data = await getDocs(userCollectionRef)
