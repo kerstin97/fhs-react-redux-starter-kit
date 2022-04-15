@@ -8,14 +8,14 @@ import { doc, deleteDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
 
-export const MoneyTransactions = ({
+function MoneyTransactions ({
   users,
   transactions,
   getTransactions,
   onSubmit,
   oweSomebody,
   toggleOwe
-}) => {
+}) {
   const user = useContext(UserContext)
   const navigate = useNavigate()
 
@@ -67,3 +67,5 @@ export const MoneyTransactions = ({
     </>
   )
 }
+
+export default React.memo(MoneyTransactions)

@@ -14,6 +14,7 @@ export const MoneyTransactionCreate = ({
   toggleOwe
 }) => {
   const user = useContext(UserContext)
+
   const transactionSchema = object({
     amount: number().required()
   })

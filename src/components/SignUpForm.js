@@ -10,7 +10,7 @@ import { db, auth } from '../firebase-config'
 import * as Yup from 'yup'
 import { UserContext } from '../App'
 
-export const SignUpForm = () => {
+export default function SignUpForm () {
   const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
 

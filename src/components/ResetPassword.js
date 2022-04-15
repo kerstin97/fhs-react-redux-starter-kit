@@ -9,7 +9,7 @@ import { auth } from '../firebase-config'
 import * as Yup from 'yup'
 import { UserContext } from '../App'
 
-export const ResetPassword = () => {
+export default function ResetPassword () {
   const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
   const navigate = useNavigate()

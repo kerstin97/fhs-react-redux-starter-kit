@@ -9,7 +9,7 @@ import { auth } from '../firebase-config'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { UserContext } from '../App'
 
-export const SignInForm = () => {
+export default function SignInForm () {
   const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
   async function handleSubmit (email, password) {
@@ -19,7 +19,6 @@ export const SignInForm = () => {
       alert(error.message)
     }
   }
-
   const userSchema = object({
     email: string().min(3),
     password: string().min(6)
