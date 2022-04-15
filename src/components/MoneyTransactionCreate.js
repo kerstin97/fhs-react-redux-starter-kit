@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from './Button'
 import { SelectInput } from './SelectInput'
 import { TextInput } from './TextInput'
 import styles from './MoneyTransactionCreate.module.css'
 import { useFormik } from 'formik'
 import { object, number } from 'yup'
+import { UserContext } from '../App'
 
-export const MoneyTransactionCreate = ({ users, myId, onSubmit, oweSomebody, toggleOwe }) => {
+export const MoneyTransactionCreate = ({
+  users,
+  onSubmit,
+  oweSomebody,
+  toggleOwe
+}) => {
+  const user = useContext(UserContext)
   const transactionSchema = object({
     amount: number().required()
   })
@@ -20,10 +27,10 @@ export const MoneyTransactionCreate = ({ users, myId, onSubmit, oweSomebody, tog
 
       if (oweSomebody === 'oweMe') {
         creditor = values.user
-        debitor = myId
+        debitor = user.uid
       } else {
         debitor = values.user
-        creditor = myId
+        creditor = user.uid
       }
 
       onSubmit(debitor, creditor, values.amount)
@@ -35,12 +42,24 @@ export const MoneyTransactionCreate = ({ users, myId, onSubmit, oweSomebody, tog
   return (
     <form className={`${styles.transaction}`} onSubmit={formik.handleSubmit}>
       <div className={`${styles.toggleOwe}`}>
-        <input type="radio" id="oweSb" name="owe" value='oweSb' onChange={() => toggleOwe()}></input>
+        <input
+          type="radio"
+          id="oweSb"
+          name="owe"
+          value="oweSb"
+          onChange={() => toggleOwe()}
+        ></input>
         <label htmlFor="oweSb">I owe somebody</label>
-        <input type="radio" id="oweMe" name="owe" value='oweMe' onChange={() => toggleOwe()}></input>
-        <label htmlFor="oweMe">Somebody owes me</label><br></br>
+        <input
+          type="radio"
+          id="oweMe"
+          name="owe"
+          value="oweMe"
+          onChange={() => toggleOwe()}
+        ></input>
+        <label htmlFor="oweMe">Somebody owes me</label>
+        <br></br>
       </div>
-
 
       <SelectInput
         label="User"
@@ -59,7 +78,7 @@ export const MoneyTransactionCreate = ({ users, myId, onSubmit, oweSomebody, tog
         value={formik.values.amount}
       ></TextInput>
       <div className={`${styles.errorMsg}`}>{formik.errors.amount}</div>
-      <Button onClick="button clicked">Create</Button>
+      <Button onClick={() => console.log('transaction created')}>Create</Button>
     </form>
   )
 }
