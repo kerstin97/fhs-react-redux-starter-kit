@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { Button } from './Button'
 import { TextInput } from './TextInput'
 import styles from './Form.module.css'
@@ -9,7 +9,7 @@ import { auth } from '../firebase-config'
 import * as Yup from 'yup'
 import { UserContext } from '../App'
 
-export const ResetPassword = () => {
+function ResetPassword () {
   const user = useContext(UserContext)
   if (user) return <Navigate to="/money-transactions"></Navigate>
   const navigate = useNavigate()
@@ -49,8 +49,15 @@ export const ResetPassword = () => {
         value={formik.values.email}
         errorMessage={formik.errors.email}
       ></TextInput>
-      <Button onClick={() => console.log('Reset Password')}>Reset</Button>
+      <Button onClick={
+        useCallback(
+          () => console.log('Reset Password'),
+          []
+        )
+        }>Reset</Button>
       <Link to="/sign-in">Sign In</Link>
     </form>
   )
 }
+
+export default React.memo(ResetPassword)

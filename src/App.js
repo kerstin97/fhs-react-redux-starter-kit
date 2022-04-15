@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { SignUpForm } from './components/SignUpForm'
-import { SignInForm } from './components/SignInForm'
-import { MoneyTransactions } from './components/MoneyTransactions'
 import { auth, db } from './firebase-config'
 import { collection, getDocs, addDoc } from 'firebase/firestore'
 import { ProtectedRoute } from './components/ProtectedRoute'
-import { ResetPassword } from './components/ResetPassword'
+const SignUpForm = React.lazy(() => import('./components/SignUpForm'))
+const SignInForm = React.lazy(() => import('./components/SignInForm'))
+const MoneyTransactions = React.lazy(() => import('./components/MoneyTransactions'))
+const ResetPassword = React.lazy(() => import('./components/ResetPassword'))
 
 // Context lets us pass a value deep into the component tree
 // without explicitly threading it through every component.
@@ -37,7 +37,7 @@ function App () {
   useEffect(() => {
     getUsers()
     getTransactions()
-  }, [oweSomebody])
+  }, [oweSomebody, user])
 
   async function getUsers () {
     const data = await getDocs(userCollectionRef)
@@ -82,24 +82,26 @@ function App () {
     <UserContext.Provider value={user}>
       <Router>
         <Routes>
-            <Route path="/sign-in" element={<SignInForm />} />
-            <Route path="/sign-up" element={<SignUpForm />} />
+            <Route path="/sign-in" element={<Suspense fallback={<div>Loading...</div>}><SignInForm /></Suspense>} />
+            <Route path="/sign-up" element={<Suspense fallback={<div>Loading...</div>}><SignUpForm /></Suspense>} />
             <Route
               path="/money-transactions"
               element={
                 <ProtectedRoute>
-                  <MoneyTransactions
-                    transactions={moneyTransaction}
-                    users={users}
-                    onSubmit={handleSubmit}
-                    getTransactions={getTransactions}
-                    oweSomebody={oweSomebody}
-                    toggleOwe={toggleOwe}
-                  />
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <MoneyTransactions
+                      transactions={moneyTransaction}
+                      users={users}
+                      onSubmit={handleSubmit}
+                      getTransactions={getTransactions}
+                      oweSomebody={oweSomebody}
+                      toggleOwe={toggleOwe}
+                    />
+                  </Suspense>
                 </ProtectedRoute>
               }
             />
-            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/reset-password" element={<Suspense fallback={<div>Loading...</div>}><ResetPassword /></Suspense>} />
         </Routes>
       </Router>
     </UserContext.Provider>

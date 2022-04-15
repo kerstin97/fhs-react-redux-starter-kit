@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { Button } from './Button'
 import { SelectInput } from './SelectInput'
 import { TextInput } from './TextInput'
@@ -14,6 +14,7 @@ export const MoneyTransactionCreate = ({
   toggleOwe
 }) => {
   const user = useContext(UserContext)
+
   const transactionSchema = object({
     amount: number().required()
   })
@@ -78,7 +79,12 @@ export const MoneyTransactionCreate = ({
         value={formik.values.amount}
       ></TextInput>
       <div className={`${styles.errorMsg}`}>{formik.errors.amount}</div>
-      <Button onClick={() => console.log('transaction created')}>Create</Button>
+      <Button onClick={
+        useCallback(
+          () => console.log('transaction created'),
+          []
+        )
+        }>Create</Button>
     </form>
   )
 }

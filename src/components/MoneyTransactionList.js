@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './MoneyTransactionList.module.css'
 import { MoneyTransaction } from './MoneyTransaction'
+
 export const MoneyTransactionList = ({ users, transactions, getTransactions, oweSomebody }) => {
   return (
     <table className={`${styles.transactionlist}`}>
